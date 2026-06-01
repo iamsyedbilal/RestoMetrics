@@ -9,6 +9,9 @@ import EmailField from "./EmailField";
 import GoogleAuthButton from "./GoogleAuthButton";
 import PasswordField from "./PasswordField";
 import NameField from "./NameField";
+import { useSignUp } from "@clerk/clerk-react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
   const {
@@ -16,16 +19,41 @@ export default function SignupForm() {
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     mode: "onChange",
   });
 
+  const { signUp, isLoaded } = useSignUp();
+  const navigate = useNavigate();
+
   const password = watch("password", "");
 
-  function onSubmit(data: RegisterSchema) {
-    console.log(data);
+  async function onSubmit(data: RegisterSchema) {
+    if (!isLoaded) return;
+
+    try {
+      await signUp.create({
+        emailAddress: data.email,
+        password: data.password,
+        firstName: data.name,
+      });
+
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+
+      toast.message("Verification code sent");
+      reset();
+      navigate("/verify-email");
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
   }
 
   return (
@@ -54,8 +82,9 @@ export default function SignupForm() {
 
         <Button
           type="submit"
-          className="h-11 w-full bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer">
-          Sign Up
+          className="h-11 w-full bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
+          disabled={isSubmitting}>
+          {isSubmitting ? "Creating Account..." : "Sign Up"}
         </Button>
 
         {/* Divider */}

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from "../../../components/shared/Logo";
 
 type AuthHeaderProps = {
   heading: string;
@@ -15,16 +16,7 @@ export default function AuthHeader({
 }: AuthHeaderProps) {
   return (
     <div className="mb-8 text-center">
-      <div className="mb-6 flex items-center justify-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-sm">
-          <span className="text-primary-foreground font-bold">R</span>
-        </div>
-
-        <span className="text-xl font-semibold tracking-tight text-foreground">
-          RestoMetrics
-        </span>
-      </div>
-
+      <Logo />
       <h1 className="text-3xl font-bold tracking-tight text-foreground">
         {heading}
       </h1>

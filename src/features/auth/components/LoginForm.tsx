@@ -7,20 +7,47 @@ import AuthHeader from "./AuthHeader";
 import EmailField from "./EmailField";
 import GoogleAuthButton from "./GoogleAuthButton";
 import PasswordField from "./PasswordField";
+import { useSignIn } from "@clerk/clerk-react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
-export default function SignupForm() {
+export default function LoginForm() {
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors },
+
+    formState: { errors, isSubmitting },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: "onChange",
   });
 
-  function onSubmit(data: LoginSchema) {
-    console.log(data);
+  const { signIn, isLoaded, setActive } = useSignIn();
+  const navigate = useNavigate();
+
+  async function onSubmit(data: LoginSchema) {
+    if (!isLoaded) return;
+
+    try {
+      const result = await signIn.create({
+        identifier: data.email,
+        password: data.password,
+      });
+
+      if (result.status === "complete") {
+        await setActive({
+          session: result.createdSessionId,
+        });
+        toast.success("Welcome back!");
+        navigate("/");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
   }
 
   return (
@@ -47,8 +74,9 @@ export default function SignupForm() {
 
         <Button
           type="submit"
-          className="h-11 w-full bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer">
-          Sign In
+          className="h-11 w-full bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
+          disabled={isSubmitting}>
+          {isSubmitting ? "Signing In..." : "Sign In"}
         </Button>
 
         {/* Divider */}

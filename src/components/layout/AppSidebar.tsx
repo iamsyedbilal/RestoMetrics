@@ -49,7 +49,7 @@ export default function AppSidebar() {
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar">
       {/* HEADER */}
-      <SidebarHeader className="border-b border-sidebar-border px-4 py-4.5">
+      <SidebarHeader className=" border-sidebar-border px-4 py-4.5">
         <SidebarHeaderComponent />
       </SidebarHeader>
 

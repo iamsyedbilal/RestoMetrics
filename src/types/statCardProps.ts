@@ -3,8 +3,7 @@ import type { LucideIcon } from "lucide-react";
 export type StatCardProps = {
   title: string;
   value: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   iconColor?: string;
-  iconBg?: string;
-  accentColor?: string;
+  variant?: "dashboard" | "orders";
 };

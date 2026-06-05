@@ -5,6 +5,7 @@ import {
   createMenu,
   deleteMenuItem,
   getMenuCategories,
+  updateMenu,
 } from "../api/menuApi";
 import type { MenuType } from "../../../types/menuType";
 import { toast } from "sonner";
@@ -72,5 +73,34 @@ export function useMenuCategories() {
     queryKey: ["menu-categories", restaurant?.id],
     queryFn: () => getMenuCategories(restaurant!.id),
     enabled: !!restaurant?.id,
+  });
+}
+
+export function useUpdateMenu() {
+  const { restaurant } = useRestaurant();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      menuId,
+      menuData,
+      imageFile,
+    }: {
+      menuId: string;
+      menuData: Partial<MenuType>;
+      imageFile?: File;
+    }) => updateMenu(menuId, menuData, imageFile, restaurant?.id),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["menu", restaurant?.id],
+      });
+
+      toast.success("Menu updated");
+    },
+
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
   });
 }

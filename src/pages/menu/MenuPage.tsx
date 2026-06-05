@@ -1,7 +1,7 @@
 import MenuList from "../../features/menu/components/MenuList";
 
-import MenuFormDialog from "../../features/menu/components/MenuFormDialog";
 import MenuFilter from "../../features/menu/components/MenuFilter";
+import CreateMenuDialog from "../../features/menu/components/CreateMenuDialog";
 
 export default function MenuPage() {
   return (
@@ -12,7 +12,7 @@ export default function MenuPage() {
           <p className="text-muted-foreground">Manage your restaurant menu</p>
         </div>
 
-        <MenuFormDialog />
+        <CreateMenuDialog />
       </div>
       <MenuFilter />
 

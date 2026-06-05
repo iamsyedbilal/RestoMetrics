@@ -9,11 +9,10 @@ import {
 } from "../../../components/ui/card";
 
 import { Badge } from "../../../components/ui/badge";
-import { Button } from "../../../components/ui/button";
-import { Pencil } from "lucide-react";
 import SkeletonLoading from "../../../components/shared/SkeletonLoading";
 import DeleteMenuDialog from "./AlertDialog";
 import type { MenuItem } from "../../../types/menuType";
+import EditMenuDialog from "./EditMenuDialog";
 
 export default function MenuList() {
   const { data: menus, isPending } = useGetAllMenu();
@@ -75,10 +74,11 @@ export default function MenuList() {
           </CardContent>
 
           <CardFooter className="gap-2">
-            <Button variant="outline" className="flex-1">
+            {/* <Button variant="outline" className="flex-1">
               <Pencil className="mr-2 h-4 w-4" />
               Edit
-            </Button>
+            </Button> */}
+            <EditMenuDialog menu={item} />
 
             <DeleteMenuDialog itemId={item.id} itemName={item.name} />
           </CardFooter>

@@ -92,3 +92,32 @@ export async function getMenuCategories(restaurantId: string) {
 
   return [...new Set(data.map((item) => item.category))];
 }
+
+export async function updateMenu(
+  menuId: string,
+  menuData: Partial<MenuType>,
+  imageFile?: File,
+  restaurantId?: string,
+) {
+  let updates = { ...menuData };
+
+  if (imageFile && restaurantId) {
+    const image_url = await uploadMenuImage(imageFile, restaurantId);
+
+    updates = {
+      ...updates,
+      image_url,
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("menu_items")
+    .update(updates)
+    .eq("id", menuId)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}

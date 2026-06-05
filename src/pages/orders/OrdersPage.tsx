@@ -1,4 +1,5 @@
 import Cards from "../../features/orders/components/Cards";
+import OrderDetailsModal from "../../features/orders/components/Modal";
 import OrderSearch from "../../features/orders/components/OrderSearch";
 import OrdersFilters from "../../features/orders/components/OrdersFilters";
 import OrdersTable from "../../features/orders/components/OrdersTable";
@@ -12,6 +13,7 @@ export default function OrdersPage() {
         <OrderSearch />
       </div>
       <OrdersTable />
+      <OrderDetailsModal />
     </div>
   );
 }

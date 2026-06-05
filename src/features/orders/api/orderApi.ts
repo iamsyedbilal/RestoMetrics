@@ -60,11 +60,10 @@ export async function getOrders(
       total_amount,
       created_at,
       notes,
-      customers!inner (
-        id,
-        name,
-        phone
-      )
+      *,
+  customers (
+    name
+  )
     `,
       { count: "exact" },
     )
@@ -90,4 +89,26 @@ export async function getOrders(
     data,
     total: count ?? 0,
   };
+}
+
+// Get Single Order
+export async function getSingleOrder(orderId: string) {
+  const { data, error } = await supabase
+    .from("orders")
+    .select(
+      `
+      *,
+      customers(*),
+      order_items(
+        *,
+        menu_items(*)
+      )
+    `,
+    )
+    .eq("id", orderId)
+    .single();
+
+  if (error) throw error;
+
+  return data;
 }

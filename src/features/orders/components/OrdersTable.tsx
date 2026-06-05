@@ -14,10 +14,13 @@ import OrdersViewToggle from "./OrdersViewToggle";
 import OrderGridCard from "./OrderGridCard";
 import { useOrdersStore } from "../../../store/orderStore";
 import { getStatusBadge } from "../../../lib/statusBadge";
+import { useOrderModalStore } from "../../../store/orderModalStore";
+import type { Order } from "../../../types/orderTypes";
 
 export default function OrdersTable() {
   const { data, isPending } = useOrders();
   const { viewMode } = useOrdersStore();
+  const { setOrder } = useOrderModalStore();
 
   const orders = data?.data ?? [];
   const total = data?.total ?? 0;
@@ -57,9 +60,15 @@ export default function OrdersTable() {
             </TableHeader>
 
             <TableBody>
-              {orders.map((order: any) => (
+              {(orders as Order[]).map((order) => (
                 <TableRow key={order.id}>
-                  <TableCell>#{order.id.slice(0, 6)}</TableCell>
+                  <TableCell>
+                    <button
+                      onClick={() => setOrder(order.id)}
+                      className="text-primary hover:underline font-medium">
+                      #{order.id.slice(0, 6)}
+                    </button>
+                  </TableCell>
                   <TableCell>{order.customers?.name}</TableCell>
                   <TableCell className="capitalize">
                     {order.order_type}
@@ -86,7 +95,7 @@ export default function OrdersTable() {
       {/* GRID VIEW */}
       {viewMode === "grid" && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {orders.map((order: any) => (
+          {(orders as Order[]).map((order) => (
             <OrderGridCard key={order.id} order={order} />
           ))}
         </div>

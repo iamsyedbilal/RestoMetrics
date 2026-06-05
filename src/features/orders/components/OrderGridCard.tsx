@@ -1,12 +1,19 @@
 import { format } from "date-fns";
 import { Badge } from "../../../components/ui/badge";
 import { getStatusBadge } from "../../../lib/statusBadge";
+import { useOrderModalStore } from "../../../store/orderModalStore";
+import type { Order } from "../../../types/orderTypes";
 
-export default function OrderGridCard({ order }: any) {
+export default function OrderGridCard({ order }: { order: Order }) {
+  const { setOrder } = useOrderModalStore();
   return (
     <div className="rounded-xl border bg-card p-4 shadow-sm transition hover:shadow-md">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium">#{order.id.slice(0, 6)}</p>
+        <button
+          onClick={() => setOrder(order.id)}
+          className="text-primary hover:underline font-medium">
+          #{order.id.slice(0, 6)}
+        </button>
 
         <span className="text-xs text-muted-foreground">
           {format(new Date(order.created_at), "dd MMM")}

@@ -11,6 +11,9 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  server: {
+    proxy: {},
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

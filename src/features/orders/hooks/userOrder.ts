@@ -1,4 +1,4 @@
-import { getOrderMetrics, getOrders } from "../api/orderApi";
+import { getOrderMetrics, getOrders, getSingleOrder } from "../api/orderApi";
 import { useQuery } from "@tanstack/react-query";
 import { useRestaurant } from "../../restaurants/hooks/useRestaurant";
 import { useOrdersStore } from "../../../store/orderStore";
@@ -25,5 +25,13 @@ export function useOrders() {
     queryFn: () =>
       getOrders(restaurant!.id, status, debouncedSearch, page, limit),
     enabled: !!restaurant?.id,
+  });
+}
+
+export function useSingleOrder(orderId?: string) {
+  return useQuery({
+    queryKey: ["order", orderId],
+    queryFn: () => getSingleOrder(orderId!),
+    enabled: !!orderId,
   });
 }

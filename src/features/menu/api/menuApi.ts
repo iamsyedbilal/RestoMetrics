@@ -1,17 +1,27 @@
 import { supabase } from "../../../services/supabase/client";
+import type { MenuCategory } from "../../../store/menuStore";
 import type { MenuType } from "../../../types/menuType";
 
-export async function getAllMenus(restaurantId: string) {
-  const { data: menus, error } = await supabase
+export async function getAllMenus(
+  restaurantId: string,
+  category: MenuCategory,
+) {
+  let query = supabase
     .from("menu_items")
     .select("*")
     .eq("restaurant_id", restaurantId)
     .eq("is_deleted", false)
     .order("created_at", { ascending: false });
 
+  if (category !== "all") {
+    query = query.eq("category", category);
+  }
+
+  const { data, error } = await query;
+
   if (error) throw error;
 
-  return menus;
+  return data;
 }
 
 export async function uploadMenuImage(file: File, restaurantId: string) {
@@ -69,4 +79,16 @@ export async function deleteMenuItem(menuId: string) {
   }
 
   return true;
+}
+
+export async function getMenuCategories(restaurantId: string) {
+  const { data, error } = await supabase
+    .from("menu_items")
+    .select("category")
+    .eq("restaurant_id", restaurantId)
+    .eq("is_deleted", false);
+
+  if (error) throw error;
+
+  return [...new Set(data.map((item) => item.category))];
 }

@@ -1,6 +1,7 @@
 import MenuList from "../../features/menu/components/MenuList";
 
 import MenuFormDialog from "../../features/menu/components/MenuFormDialog";
+import MenuFilter from "../../features/menu/components/MenuFilter";
 
 export default function MenuPage() {
   return (
@@ -13,6 +14,7 @@ export default function MenuPage() {
 
         <MenuFormDialog />
       </div>
+      <MenuFilter />
 
       <MenuList />
     </div>

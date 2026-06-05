@@ -1,15 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRestaurant } from "../../restaurants/hooks/useRestaurant";
-import { getAllMenus, createMenu, deleteMenuItem } from "../api/menuApi";
+import {
+  getAllMenus,
+  createMenu,
+  deleteMenuItem,
+  getMenuCategories,
+} from "../api/menuApi";
 import type { MenuType } from "../../../types/menuType";
 import { toast } from "sonner";
+import { useMenuStore } from "../../../store/menuStore";
 
 export function useGetAllMenu() {
   const { restaurant } = useRestaurant();
+  const { category } = useMenuStore();
 
   return useQuery({
-    queryKey: ["menu", restaurant?.id],
-    queryFn: () => getAllMenus(restaurant?.id),
+    queryKey: ["menu", restaurant?.id, category],
+    queryFn: () => getAllMenus(restaurant!.id, category),
     enabled: !!restaurant?.id,
   });
 }
@@ -55,5 +62,15 @@ export function useDeleteMenu() {
     onError: (error: Error) => {
       toast.error(error.message);
     },
+  });
+}
+
+export function useMenuCategories() {
+  const { restaurant } = useRestaurant();
+
+  return useQuery({
+    queryKey: ["menu-categories", restaurant?.id],
+    queryFn: () => getMenuCategories(restaurant!.id),
+    enabled: !!restaurant?.id,
   });
 }

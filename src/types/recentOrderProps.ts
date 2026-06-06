@@ -6,5 +6,5 @@ export interface RecentOrder {
   created_at: string;
   customers: {
     name: string;
-  } | null;
+  }[];
 }

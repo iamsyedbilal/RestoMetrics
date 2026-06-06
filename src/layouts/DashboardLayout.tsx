@@ -9,6 +9,7 @@ import OnboardingForm from "../features/restaurants/components/OnboardingForm";
 
 export default function DashboardLayout() {
   const { restaurant, isLoading } = useRestaurant();
+  console.log(restaurant);
   const location = useLocation();
 
   if (isLoading) return <Loading />;
@@ -50,6 +51,23 @@ export default function DashboardLayout() {
                 <Moon className="h-5 w-5" />
                 {/* Swap with Sun when dark mode is active */}
               </Button>
+              <div className="flex items-center gap-3 rounded-full border bg-muted/40 px-3 py-1.5">
+                {/* Logo */}
+                <img
+                  src={restaurant.logo_url}
+                  alt={restaurant.name}
+                  className="h-9 w-9 rounded-full object-cover ring-2 ring-background"
+                />
+
+                <div className="flex flex-col leading-tight">
+                  <span className="text-sm font-medium text-foreground">
+                    {restaurant.name}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    Restaurant
+                  </span>
+                </div>
+              </div>
             </div>
           </header>
           {/* page content */}

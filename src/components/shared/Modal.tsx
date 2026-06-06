@@ -1,15 +1,17 @@
-// OrderDetailsModal.tsx
+import Loading from "./Loading";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
-import Loading from "../../../components/shared/Loading";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "../../../components/ui/dialog";
+import { useOrderModalStore } from "../../store/orderModalStore";
+import { useSingleOrder } from "../../features/orders/hooks/userOrder";
 
-import { useOrderModalStore } from "../../../store/orderModalStore";
-import { useSingleOrder } from "../hooks/userOrder";
+type OrderItem = {
+  id: string | number;
+  quantity: number;
+  subtotal: number;
+  menu_items?: {
+    name?: string;
+  };
+};
 
 export default function OrderDetailsModal() {
   const { open, close, orderId } = useOrderModalStore();
@@ -45,7 +47,7 @@ export default function OrderDetailsModal() {
               <h3 className="font-semibold mb-2">Items</h3>
 
               <div className="space-y-2">
-                {order?.order_items?.map((item: any) => (
+                {order?.order_items?.map((item: OrderItem) => (
                   <div
                     key={item.id}
                     className="flex justify-between border-b pb-2">

@@ -30,8 +30,8 @@ export function useOrders() {
 
 export function useSingleOrder(orderId?: string) {
   return useQuery({
-    queryKey: ["order", orderId],
-    queryFn: () => getSingleOrder(orderId!),
+    queryKey: ["orders", orderId],
     enabled: !!orderId,
+    queryFn: () => getSingleOrder(orderId!),
   });
 }

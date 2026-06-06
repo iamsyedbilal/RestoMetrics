@@ -207,7 +207,7 @@ export async function getRecentOrders(restaurantId: string) {
     )
     .eq("restaurant_id", restaurantId)
     .order("created_at", { ascending: false })
-    .limit(5);
+    .limit(7);
 
   if (error) throw error;
   return data;

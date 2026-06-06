@@ -1,3 +1,9 @@
+import RestaurantSettings from "../../features/restaurants/components/RestaurantSettings";
+
 export default function SettingsPage() {
-  return <div className="text-2xl font-bold">Settings</div>;
+  return (
+    <div>
+      <RestaurantSettings />
+    </div>
+  );
 }

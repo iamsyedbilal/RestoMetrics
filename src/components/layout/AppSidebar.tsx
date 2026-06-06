@@ -16,7 +16,6 @@ import { mainNavigation, systemNavigation } from "../../config/navigation";
 import SidebarFooterComponent from "./SidebarFooterComponent";
 import SidebarHeaderComponent from "./SidebarHeaderComponent";
 
-// helper so you don't repeat JSX
 function NavItems({ items }: { items: typeof mainNavigation }) {
   return (
     <SidebarMenu>

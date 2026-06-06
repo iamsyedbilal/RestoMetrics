@@ -3,6 +3,7 @@ import DonutChart from "../../features/dashboard/components/DonutChart";
 import RecentOrders from "../../features/dashboard/components/RecentOrders";
 import RevenueAreaChart from "../../features/dashboard/components/RevenueAreaChart";
 import TopSellingItems from "../../features/dashboard/components/TopSellingItems";
+import OrderDetailsModal from "../../components/shared/Modal";
 
 export default function OverviewPage() {
   return (
@@ -26,6 +27,7 @@ export default function OverviewPage() {
           <TopSellingItems />
         </div>
         <div className="lg:col-span-2">
+          <OrderDetailsModal />
           <RecentOrders />
         </div>
       </div>

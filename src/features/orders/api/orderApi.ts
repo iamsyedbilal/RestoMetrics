@@ -61,7 +61,7 @@ export async function getOrders(
       created_at,
       notes,
       *,
-  customers (
+  customers!inner (
     name
   )
     `,

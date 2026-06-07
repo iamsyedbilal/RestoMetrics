@@ -1,127 +1,142 @@
 # RestoMetrics
 
-RestoMetrics is a modern restaurant analytics and management dashboard built with React, TypeScript, and Vite. The application helps restaurant owners monitor business performance, manage operations, and gain actionable insights through a clean and responsive interface.
+A restaurant analytics and management SaaS dashboard. Built for restaurant owners who want to monitor revenue, track orders, manage their menu, and understand their customers — all in one place.
 
-## 🚀 Tech Stack
+**Live Demo:** [restometrics.vercel.app](https://restometrics.vercel.app)
 
-### Frontend
+---
 
-- React 19
-- TypeScript
+## Tech Stack
+
+**Frontend**
+
+- React 19 + TypeScript
 - Vite
-- React Router DOM
-- React Hook Form
-- Zod
-- Tailwind CSS
-- shadcn/ui
+- Tailwind CSS + shadcn/ui
+- React Router v6
+- React Hook Form + Zod
+- Recharts
+- date-fns
 
-### Planned Backend
+**Auth & Backend**
 
-- Clerk (Authentication)
-- Neon PostgreSQL (Database)
-- Drizzle ORM
-- Hono / Express API
-
-## ✨ Features Implemented
-
-### Authentication UI
-
-- Responsive Login Page
-- Responsive Signup Page
-- Form validation using React Hook Form + Zod
-- Password strength indicator
-- Google authentication button UI
-- Reusable authentication components
-- Shared authentication layout
-
-### Routing
-
-- React Router setup
-- Dedicated authentication routes
-- Shared Auth Layout
-
-### UI & UX
-
-- Responsive design
-- Desktop hero image section
-- Reusable form field components
-- Consistent spacing and typography
-- Tailwind CSS styling
+- Clerk (Authentication + Google OAuth)
+- Supabase (Database + Storage)
+- React Query (Server state)
+- Zustand (UI state)
 
 ---
 
-## 🛣️ Current Progress
+## Features
 
-### Completed
+### Dashboard
 
-- Project setup
-- Routing configuration
-- Authentication layouts
-- Login UI
-- Signup UI
-- Form validation schemas
-- Reusable form components
+- Revenue overview with area chart (7 / 15 / 30 / 60 / 90 day toggle)
+- Order type distribution (dine-in / delivery / takeaway)
+- Top selling menu items
+- Recent orders table
+- Key metrics: total revenue, orders, avg order value, customers
 
-### In Progress
+### Orders
 
-- Clerk authentication integration
-- Google OAuth authentication
+- Full orders table with pagination
+- Filter by status (pending / preparing / delivered / cancelled)
+- Search by customer name
+- Grid and list view toggle
+
+### Menu Management
+
+- Add / edit / delete menu items
+- Image upload to Supabase Storage
+- Category filter
+- Toggle item availability
+
+### Customers
+
+- Customer list with search
+- Total orders and spend per customer
+- Order history modal per customer
+
+### Settings
+
+- Restaurant name and logo
+- Currency (PKR / USD / EUR / GBP / AED) with live conversion
+- Tax rate configuration
+
+### Auth
+
+- Email + password signup with verification
+- Google OAuth
 - Protected routes
-
-### Upcoming
-
-- Neon database setup
-- Drizzle ORM integration
-- Dashboard pages
-- Analytics widgets
-- Restaurant metrics tracking
-- User profile management
-- Data visualization
+- Dark / light mode (persisted)
 
 ---
 
-### Authentication
-
-- Login Page
-- Signup Page
-- Responsive Auth Layout
-
----
-
-## 🏃 Getting Started
-
-Install dependencies:
+## Getting Started
 
 ```bash
-npm install
+# Install dependencies
+bun install
+
+# Start dev server
+bun run dev
+
+# Build for production
+bun run build
 ```
 
-Start development server:
+### Environment Variables
+
+Create a `.env` file in the root:
 
 ```bash
-npm run dev
-```
-
-Build for production:
-
-```bash
-npm run build
-```
-
-Preview production build:
-
-```bash
-npm run preview
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+VITE_CLERK_PUBLISHABLE_KEY=
+VITE_EXCHANGE_API_KEY=
 ```
 
 ---
 
-## 🎯 Project Goal
+## Project Structure
 
-The goal of RestoMetrics is to provide restaurant owners with a simple and intuitive platform to track business performance, monitor key metrics, and make data-driven decisions.
+src/
+├── app/ # Router and providers
+├── features/ # Feature-based modules
+│ ├── auth/
+│ ├── dashboard/
+│ ├── orders/
+│ ├── menu/
+│ ├── customers/
+│ └── restaurants/
+│ └── user/
+├── components/ # Shared UI components
+├── hooks/ # Global hooks
+├── store/ # Zustand stores
+├── types/ # TypeScript types
+└── lib/ # Utilities
 
 ---
 
-## 📌 Status
+## Screenshots
 
-🚧 Currently under active development.
+### Dashboard
+
+![Dashboard Light](./public/screenshots/light.png)
+![Dashboard Dark](./public/screenshots/dark.png)
+
+### Orders
+
+![Orders](./public/screenshots/light-order.png)
+![Orders](./public/screenshots/dark-order.png)
+
+### Menu
+
+![Menu](./public/screenshots/menu-light.png)
+
+## Author
+
+**Syed Bilal** — React Developer from Karachi, Pakistan
+
+[![GitHub](https://img.shields.io/badge/GitHub-iamsyedbilal-181717?style=flat&logo=github)](https://github.com/iamsyedbilal)
+[![Twitter](https://img.shields.io/badge/Twitter-@SyedBilal200-1DA1F2?style=flat&logo=twitter)](https://twitter.com/SyedBilal200)

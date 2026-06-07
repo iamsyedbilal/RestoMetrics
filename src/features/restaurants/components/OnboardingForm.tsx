@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
-import { useRestaurant } from "../hooks/useRestaurant";
+import { useCreateRestaurant } from "../hooks/useRestaurant";
 import { toast } from "sonner";
 
 export default function OnboardingForm() {
   const [name, setName] = useState("");
-  const { createRestaurant, isCreating } = useRestaurant();
+  const { data: createRestaurant, isPending: isCreating } =
+    useCreateRestaurant();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

@@ -1,17 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
 
-// Auth Pages
+import { Suspense } from "react";
+
+// Lazy pages
 import {
   LoginPage,
   SignupPage,
   CustomersPage,
   MenuPage,
-  NotFoundPage,
   OrdersPage,
   OverviewPage,
   SettingsPage,
   User,
-} from "../../pages";
+  NotFoundPage,
+} from "./lazyPages";
 
 // Layouts
 import AuthLayout from "../../layouts/AuthLayout";
@@ -24,13 +26,18 @@ import SSOCallback from "../../features/auth/components/SSOCallback";
 // Route Guards
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+import Loading from "../../components/shared/Loading";
 
 export const router = createBrowserRouter([
   /**
    * 🔓 PUBLIC AUTH ROUTES
    */
   {
-    element: <PublicRoute />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <PublicRoute />
+      </Suspense>
+    ),
     children: [
       {
         element: <AuthLayout />,
@@ -57,7 +64,11 @@ export const router = createBrowserRouter([
    * 🔒 PROTECTED APP ROUTES
    */
   {
-    element: <ProtectedRoute />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ProtectedRoute />
+      </Suspense>
+    ),
     children: [
       {
         element: <DashboardLayout />,

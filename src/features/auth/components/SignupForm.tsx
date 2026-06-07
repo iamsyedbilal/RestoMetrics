@@ -2,16 +2,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, type RegisterSchema } from "../schema/authSchema";
 import { Button } from "../../../components/ui/button";
-import PasswordStrength from "./PasswordStrength";
+const PasswordStrength = lazy(() => import("./PasswordStrength"));
 import Divider from "./Divider";
 import AuthHeader from "./AuthHeader";
 import EmailField from "./EmailField";
-import GoogleAuthButton from "./GoogleAuthButton";
+const GoogleAuthButton = lazy(() => import("./GoogleAuthButton"));
 import PasswordField from "./PasswordField";
 import NameField from "./NameField";
 import { useSignUp } from "@clerk/clerk-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
 export default function SignupForm() {
   const {
@@ -77,7 +78,9 @@ export default function SignupForm() {
         <PasswordField
           register={register("password")}
           error={errors.password?.message}>
-          {!errors.password && <PasswordStrength password={password} />}
+          <Suspense fallback={null}>
+            {!errors.password && <PasswordStrength password={password} />}
+          </Suspense>
         </PasswordField>
 
         <Button

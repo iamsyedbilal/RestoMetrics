@@ -1,9 +1,16 @@
-import SignupForm from "../../features/auth/components/SignupForm";
+import { lazy, Suspense } from "react";
+import Loading from "../../components/shared/Loading";
+
+const SignupForm = lazy(
+  () => import("../../features/auth/components/SignupForm"),
+);
 
 export default function SignupPage() {
   return (
     <div>
-      <SignupForm />
+      <Suspense fallback={<Loading />}>
+        <SignupForm />
+      </Suspense>
     </div>
   );
 }

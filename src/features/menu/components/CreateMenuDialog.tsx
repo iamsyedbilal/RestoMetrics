@@ -23,6 +23,7 @@ export default function CreateMenuDialog() {
     description: "",
     price: "",
     category: "",
+    is_available: true,
   });
 
   const handleChange = (
@@ -39,7 +40,13 @@ export default function CreateMenuDialog() {
   };
 
   const reset = () => {
-    setForm({ name: "", description: "", price: "", category: "" });
+    setForm({
+      name: "",
+      description: "",
+      price: "",
+      category: "",
+      is_available: true,
+    });
     setImageFile(null);
     setImagePreview(null);
   };

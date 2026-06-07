@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 export default function OnboardingForm() {
   const [name, setName] = useState("");
-  const { data: createRestaurant, isPending: isCreating } =
+  const { mutate: createRestaurant, isPending: isCreating } =
     useCreateRestaurant();
 
   async function handleSubmit(e: React.FormEvent) {

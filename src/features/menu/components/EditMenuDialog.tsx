@@ -31,6 +31,7 @@ export default function EditMenuDialog({ menu }: Props) {
     description: "",
     price: "",
     category: "",
+    is_available: true,
   });
 
   const handleOpenChange = (value: boolean) => {
@@ -42,6 +43,7 @@ export default function EditMenuDialog({ menu }: Props) {
         description: menu.description ?? "",
         price: String(menu.price ?? ""),
         category: menu.category ?? "",
+        is_available: form.is_available,
       });
 
       setImagePreview(menu.image_url ?? null);
@@ -51,7 +53,13 @@ export default function EditMenuDialog({ menu }: Props) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+    const { name, value, type } = e.target as HTMLInputElement;
+
+    setForm((p) => ({
+      ...p,
+      [name]:
+        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+    }));
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +80,7 @@ export default function EditMenuDialog({ menu }: Props) {
           description: form.description,
           category: form.category,
           price: Number(form.price),
-          is_available: true,
+          is_available: form.is_available,
         },
         imageFile: imageFile ?? undefined,
       },

@@ -10,6 +10,7 @@ import {
   OrdersPage,
   OverviewPage,
   SettingsPage,
+  User,
 } from "../../pages";
 
 // Layouts
@@ -66,6 +67,7 @@ export const router = createBrowserRouter([
           { path: "/menu", element: <MenuPage /> },
           { path: "/customers", element: <CustomersPage /> },
           { path: "/settings", element: <SettingsPage /> },
+          { path: "/me", element: <User /> },
         ],
       },
     ],

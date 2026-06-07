@@ -2,7 +2,8 @@ import { Badge } from "../../../components/ui/badge";
 import { TableCell, TableRow } from "../../../components/ui/table";
 import type { Order } from "../../../types/orderTypes";
 import { getStatusBadge } from "../../../lib/statusBadge";
-import { format } from "date-fns";
+import { format as formatDate } from "date-fns";
+import { useFormatCurrency } from "../../../hooks/useCurrency";
 
 type Props = {
   order: Order;
@@ -10,7 +11,7 @@ type Props = {
 };
 
 export function OrderRow({ order, onSelect }: Props) {
-  console.log(order);
+  const format = useFormatCurrency();
   return (
     <TableRow>
       <TableCell>
@@ -32,11 +33,11 @@ export function OrderRow({ order, onSelect }: Props) {
         </Badge>
       </TableCell>
 
-      <TableCell>{format(new Date(order.created_at), "dd MMM yyyy")}</TableCell>
-
-      <TableCell className="text-right">
-        PKR {order.total_amount.toLocaleString()}
+      <TableCell>
+        {formatDate(new Date(order.created_at), "dd MMM yyyy")}
       </TableCell>
+
+      <TableCell className="text-right">{format(order.total_amount)}</TableCell>
     </TableRow>
   );
 }

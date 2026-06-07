@@ -7,6 +7,7 @@ import {
   getTopSellingItems,
 } from "../api/dashboardApi";
 import { useRestaurant } from "../../restaurants/hooks/useRestaurant";
+import type { RecentOrder } from "../../../types/recentOrderProps";
 
 export function useDashboard() {
   const { restaurant } = useRestaurant();
@@ -51,9 +52,10 @@ export function useTopSellingItems() {
 export function useRecentOrders() {
   const { restaurant } = useRestaurant();
 
-  return useQuery({
+  return useQuery<RecentOrder[]>({
     queryKey: ["dashboard-recent-orders", restaurant?.id],
-    queryFn: () => getRecentOrders(restaurant!.id),
+    queryFn: () =>
+      getRecentOrders(restaurant!.id) as unknown as Promise<RecentOrder[]>,
     enabled: !!restaurant?.id,
   });
 }

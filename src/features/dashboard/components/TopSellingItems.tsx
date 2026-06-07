@@ -1,7 +1,9 @@
+import { useFormatCurrency } from "../../../hooks/useCurrency";
 import { useTopSellingItems } from "../hooks/useDashboard";
 
 export default function TopSellingItems() {
   const { data = [] } = useTopSellingItems();
+  const currency = useFormatCurrency();
 
   const max = Math.max(...data.map((i) => i.totalOrders), 1);
   return (
@@ -32,7 +34,7 @@ export default function TopSellingItems() {
                 <div className="text-right">
                   <p className="text-sm font-semibold">{item.totalOrders}</p>
                   <p className="text-xs text-muted-foreground">
-                    PKR {item.totalRevenue.toLocaleString()}
+                    {currency(item.totalRevenue)}
                   </p>
                 </div>
               </div>

@@ -8,6 +8,7 @@ type Props = {
     description: string;
     price: string;
     category: string;
+    is_available: boolean;
   };
   imagePreview: string | null;
   isPending: boolean;
@@ -66,6 +67,16 @@ export default function MenuForm({
           onChange={onChange}
           required
         />
+      </div>
+
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          name="is_available"
+          checked={form.is_available}
+          onChange={onChange}
+        />
+        <label className="text-sm">Available</label>
       </div>
 
       {imagePreview && (

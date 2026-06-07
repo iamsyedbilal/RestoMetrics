@@ -1,4 +1,5 @@
 import { TableCell, TableRow } from "../../../components/ui/table";
+import { useFormatCurrency } from "../../../hooks/useCurrency";
 
 type Order = {
   id: string;
@@ -25,6 +26,7 @@ export default function TableItems({ customer }: TableItemsProps) {
   const totalSpent = customer.orders
     .filter((order) => order.status === "delivered")
     .reduce((sum, order) => sum + order.total_amount, 0);
+  const currency = useFormatCurrency();
 
   return (
     <TableRow key={customer.id}>
@@ -41,7 +43,7 @@ export default function TableItems({ customer }: TableItemsProps) {
       <TableCell className="text-center">{customer.orders.length}</TableCell>
 
       <TableCell className="text-right font-medium">
-        Rs. {totalSpent.toLocaleString()}
+        {currency(totalSpent)}
       </TableCell>
     </TableRow>
   );

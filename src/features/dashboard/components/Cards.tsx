@@ -1,11 +1,12 @@
 import { TrendingUp, ShoppingBag, BarChart2, Users } from "lucide-react";
 import StatCard from "./StatCard";
 import { useDashboard } from "../hooks/useDashboard";
-import { formatCurrency } from "../../../lib/formatCurrency";
 import SkeletonLoading from "../../../components/shared/SkeletonLoading";
+import { useFormatCurrency } from "../../../hooks/useCurrency";
 
 export default function Cards() {
   const { data, isPending } = useDashboard();
+  const currency = useFormatCurrency();
 
   if (isPending) return <SkeletonLoading />;
 
@@ -13,7 +14,7 @@ export default function Cards() {
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard
         title="Total Revenue"
-        value={formatCurrency(data?.totalRevenue ?? 0)}
+        value={currency(data?.totalRevenue ?? 0)}
         icon={TrendingUp}
         iconColor="text-chart-4"
       />
@@ -27,7 +28,7 @@ export default function Cards() {
 
       <StatCard
         title="Avg Order Value"
-        value={formatCurrency(data?.avgOrderValue ?? 0)}
+        value={currency(data?.avgOrderValue ?? 0)}
         icon={BarChart2}
         iconColor="text-chart-1"
       />

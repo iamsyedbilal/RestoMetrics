@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useClerk, useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 export default function SidebarFooterComponent() {
   const { user } = useUser();
@@ -17,6 +18,8 @@ export default function SidebarFooterComponent() {
     user?.firstName?.[0] ||
     user?.emailAddresses?.[0]?.emailAddress?.[0]?.toUpperCase() ||
     "U";
+
+  const navigate = useNavigate();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,7 +45,7 @@ export default function SidebarFooterComponent() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-56" align="end" side="top">
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/me")}>
           <User className="h-4 w-4 mr-2" />
           Account
         </DropdownMenuItem>

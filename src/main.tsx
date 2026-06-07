@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "./components/ui/sonner.tsx";
 import { ClerkProvider } from "@clerk/clerk-react";
+import ThemeProvider from "./components/shared/ThemeProvider.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,9 +21,11 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <RouterProvider router={router} />
-        <Toaster />
+        <ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <RouterProvider router={router} />
+          <Toaster />
+        </ThemeProvider>
       </QueryClientProvider>
     </ClerkProvider>
   </StrictMode>,

@@ -6,3 +6,4 @@ export { default as MenuPage } from "./menu/MenuPage";
 export { default as OrdersPage } from "./orders/OrdersPage";
 export { default as SettingsPage } from "./settings/SettingsPage";
 export { default as NotFoundPage } from "./not-found-page";
+export { default as User } from "./user/User";

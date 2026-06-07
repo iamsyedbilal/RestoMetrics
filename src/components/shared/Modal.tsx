@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 import { useOrderModalStore } from "../../store/orderModalStore";
 import { useSingleOrder } from "../../features/orders/hooks/userOrder";
+import { useFormatCurrency } from "../../hooks/useCurrency";
 
 type OrderItem = {
   id: string | number;
@@ -15,7 +16,7 @@ type OrderItem = {
 
 export default function OrderDetailsModal() {
   const { open, close, orderId } = useOrderModalStore();
-
+  const currency = useFormatCurrency();
   const { data: order, isPending } = useSingleOrder(orderId || undefined);
 
   return (
@@ -39,7 +40,8 @@ export default function OrderDetailsModal() {
               </p>
 
               <p>
-                <strong>Total:</strong> PKR {order?.total_amount}
+                <strong>Total:</strong>
+                {currency(order?.total_amount)}
               </p>
             </div>
 
@@ -55,7 +57,7 @@ export default function OrderDetailsModal() {
                       {item.menu_items?.name} × {item.quantity}
                     </span>
 
-                    <span>PKR {item.subtotal}</span>
+                    <span>{item.subtotal}</span>
                   </div>
                 ))}
               </div>

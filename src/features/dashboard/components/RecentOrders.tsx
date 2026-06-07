@@ -5,10 +5,12 @@ import { useOrderModalStore } from "../../../store/orderModalStore";
 import type { RecentOrder } from "../../../types/recentOrderProps";
 import { getStatusBadge } from "../../../lib/statusBadge";
 import { Badge } from "../../../components/ui/badge";
+import { useFormatCurrency } from "../../../hooks/useCurrency";
 
 export default function RecentOrders() {
   const { data = [], isPending } = useRecentOrders();
   const { setOrder } = useOrderModalStore();
+  const currency = useFormatCurrency();
 
   const columns = [
     { label: "Order" },
@@ -45,7 +47,7 @@ export default function RecentOrders() {
               </button>
             </TableCell>
 
-            <TableCell>{order.customers?.[0]?.name ?? "Guest"}</TableCell>
+            <TableCell>{order.customers?.name ?? "Guest"}</TableCell>
 
             <TableCell>
               <Badge
@@ -57,7 +59,7 @@ export default function RecentOrders() {
             <TableCell className="capitalize">{order.status}</TableCell>
 
             <TableCell className="text-right font-semibold">
-              PKR {order.total_amount.toLocaleString()}
+              {currency(order.total_amount)}
             </TableCell>
           </TableRow>
         ))}

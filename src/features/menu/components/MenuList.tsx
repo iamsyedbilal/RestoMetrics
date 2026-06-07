@@ -13,10 +13,11 @@ import SkeletonLoading from "../../../components/shared/SkeletonLoading";
 import DeleteMenuDialog from "./AlertDialog";
 import type { MenuItem } from "../../../types/menuType";
 import EditMenuDialog from "./EditMenuDialog";
+import { useFormatCurrency } from "../../../hooks/useCurrency";
 
 export default function MenuList() {
   const { data: menus, isPending } = useGetAllMenu();
-
+  const currency = useFormatCurrency();
   if (isPending) return <SkeletonLoading />;
 
   if (!menus?.length) {
@@ -41,7 +42,7 @@ export default function MenuList() {
               <img
                 src={item.image_url}
                 alt={item.name}
-                className="h-full w-full object-cover block"
+                className={`h-full w-full object-cover block ${!item.is_available ? "grayscale" : ""}`}
                 loading="lazy"
               />
             ) : (
@@ -69,15 +70,11 @@ export default function MenuList() {
             {item.category && <Badge variant="outline">{item.category}</Badge>}
 
             <div className="text-2xl font-bold text-primary">
-              PKR {Number(item.price).toLocaleString()}
+              {currency(item.price)}
             </div>
           </CardContent>
 
           <CardFooter className="gap-2">
-            {/* <Button variant="outline" className="flex-1">
-              <Pencil className="mr-2 h-4 w-4" />
-              Edit
-            </Button> */}
             <EditMenuDialog menu={item} />
 
             <DeleteMenuDialog itemId={item.id} itemName={item.name} />

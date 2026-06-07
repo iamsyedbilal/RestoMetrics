@@ -25,9 +25,11 @@ import {
 } from "../../../components/ui/select";
 
 import { useRevenueByDay } from "../hooks/useDashboard";
+import { useFormatCurrency } from "../../../hooks/useCurrency";
 
 export default function RevenueAreaChart() {
   const [days, setDays] = useState(30);
+  const format = useFormatCurrency();
 
   const { data = [], isPending } = useRevenueByDay(days);
 
@@ -97,9 +99,7 @@ export default function RevenueAreaChart() {
                 tickLine={false}
                 axisLine={false}
                 tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
-                tickFormatter={(value) =>
-                  `PKR ${Number(value).toLocaleString()}`
-                }
+                tickFormatter={(value) => format(value)}
               />
 
               <Tooltip
@@ -109,10 +109,13 @@ export default function RevenueAreaChart() {
                   borderRadius: "12px",
                   color: "var(--card-foreground)",
                 }}
-                formatter={(value) => [
-                  `PKR ${Number(value).toLocaleString()}`,
-                  "Revenue",
-                ]}
+                formatter={(value) => {
+                  const numericValue = Array.isArray(value)
+                    ? Number(value[0] ?? 0)
+                    : Number(value ?? 0);
+
+                  return [format(numericValue), "Revenue"];
+                }}
               />
 
               <Area

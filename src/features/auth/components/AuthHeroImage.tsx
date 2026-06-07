@@ -6,6 +6,8 @@ export default function AuthHeroImage() {
           key={i}
           src={`/images/img-${i + 1}.jpg`}
           alt={`Food ${i + 1}`}
+          loading="eager"
+          fetchPriority="high"
           className="cursor-pointer h-full w-full object-cover "
         />
       ))}

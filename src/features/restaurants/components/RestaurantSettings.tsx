@@ -25,7 +25,7 @@ import { toast } from "sonner";
 
 export default function RestaurantSettings() {
   const { restaurant } = useRestaurant();
-  const { mutateAsync: updateRestaurant, isPending: isUpdating } =
+  const { mutate: updateRestaurant, isPending: isUpdating } =
     useUpdateRestaurant();
   const { mutateAsync: uploadLogo } = useUploadLogo();
 
